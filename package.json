@@ -6,6 +6,7 @@
   "author": "Guimarães Mahota <guimaraesmahota@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node backend/index.js"
+    "start": "node backend/index.js",
+    "heroku-prebuild": "cd backend && npm install && npm run build && cd .. && cd backend && npm install"
   }
 }
