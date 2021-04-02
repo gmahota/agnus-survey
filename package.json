@@ -6,8 +6,6 @@
   "author": "Guimarães Mahota <guimaraesmahota@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "ng build",
-    "start": "node backend/index.js",
-    "heroku-postbuild": "ng build --prod"
+    "start": "node backend/index.js"
   }
 }
