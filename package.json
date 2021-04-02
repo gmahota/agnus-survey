@@ -1,0 +1,11 @@
+{
+  "name": "agnus-survey",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:Aguns/agnus-survey.git",
+  "author": "Guimarães Mahota <guimaraesmahota@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "server": "node backend/index.js"
+  }
+}
