@@ -5,6 +5,7 @@ var dbadapter = require("./dbadapter");
 var mysqldbadapter = require("./mysqldbadapter");
 var inmemorydbadapter = require("./inmemorydbadapter");
 var dotenv = require("dotenv").config();
+var path = require("path");
 
 var app = express();
 app.use(
@@ -98,6 +99,7 @@ app.get("/results", function (req, res) {
 });
 
 app.use(express.static(__dirname + "/public"));
+app.use("/images", express.static(path.join(__dirname, "..", "uploads")));
 
 app.listen(process.env.PORT || 3000, function () {
   console.log("Listening!");
