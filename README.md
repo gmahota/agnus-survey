@@ -6,4 +6,4 @@
 
 ### Special Tank's
 
-[SurveyJS] (https://github.com/surveyjs/survey-analytics) for wonderfull library
+[SurveyJS](https://github.com/surveyjs/survey-analytics) for wonderfull library
