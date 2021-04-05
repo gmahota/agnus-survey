@@ -1,15 +1,12 @@
 var pgp = require("pg-promise")(/*options*/);
 var dotenv = require("dotenv").config();
 
-var db = pgp(
-  process.env.DATABASE_URL ||
-    "postgres://postgres:123456@localhost:5432/surveyjs"
-);
-
-console.log(process.env.DATABASE_URL);
-console.log(db);
-
 function PostgresDBAdapter() {
+  var db = pgp(
+    process.env.DATABASE_URL ||
+      "postgres://postgres:123456@localhost:5432/surveyjs"
+  );
+
   function getObjectFromStorage(tableName, callback) {
     db.any("SELECT * FROM " + tableName).then(function (result) {
       var objects = {};
