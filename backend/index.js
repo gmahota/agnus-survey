@@ -9,7 +9,7 @@ var dotenv = require("dotenv").config();
 var app = express();
 app.use(
   session({
-    secret: "mysecret",
+    secret: process.env.secret,
     resave: true,
     saveUninitialized: true,
     //cookie: { secure: true }
