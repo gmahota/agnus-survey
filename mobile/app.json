@@ -1,13 +1,18 @@
 {
   "expo": {
-    "name": "react-native-simple-survey-example-app",
-    "slug": "snack-7eeef395-b4cb-4f7f-90be-caf04e2c1898",
-    "version": "1.0.0",
+    "name": "Agnus Survey",
+    "slug": "now-ui-react-native",
+    "privacy": "public",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "1.4.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -19,12 +24,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
+    "description": "Agnus Survey, based on React Native end Survey.JS . Coded by Mahota Serviços",
     "web": {
       "favicon": "./assets/favicon.png"
     }
