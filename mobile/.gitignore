@@ -9,3 +9,5 @@ yarn.lock
 *.mobileprovision
 .DS_Store
 
+.expo
+.expo-shared

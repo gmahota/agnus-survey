@@ -1,16 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Block, Button, theme, Text } from 'galio-framework';
 
 import { Card } from '../components';
 import articles from '../constants/articles';
+import { getSurveysData } from '../services/surveyService';
 const { width } = Dimensions.get('screen');
 
 import nowTheme from '../constants/Theme';
 
 class Home extends React.Component {
-  renderArticles = () => {
+  renderArticles = (surveys) => {
     const { navigation } = this.props;
+
+    if (surveys.length === 0) {
+      return (
+        <Block flex center style={styles.home}>
+          <Text>Loading...</Text>
+        </Block>
+      );
+    }
+
     return (
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.articles}>
         <Block flex>
@@ -30,23 +40,43 @@ class Home extends React.Component {
             </Button>
           </Block>
 
-          <Card item={articles[0]} horizontal />
-
-          <Block flex row>
-            <Card item={articles[1]} style={{ marginRight: theme.SIZES.BASE }} />
-            <Card item={articles[2]} />
-          </Block>
-          <Card item={articles[3]} horizontal />
-          <Card item={articles[4]} full />
+          {surveys.map((item) => {
+            return <Card key={item.id} item={item} horizontal />;
+          })}
         </Block>
       </ScrollView>
     );
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      surveys: [],
+    };
+    this.getSurveys = this.getSurveys.bind(this);
+  }
+
+  async componentDidMount() {
+    this.getSurveys();
+  }
+
+  async getSurveys() {
+    let data = await getSurveysData();
+    this.setState({ surveys: data });
+  }
+
   render() {
+    const { surveys } = this.state;
+    if (surveys.length === 0) {
+      return (
+        <Block flex center style={styles.home}>
+          <Text>Loading...</Text>
+        </Block>
+      );
+    }
     return (
       <Block flex center style={styles.home}>
-        {this.renderArticles()}
+        {this.renderArticles(surveys)}
       </Block>
     );
   }

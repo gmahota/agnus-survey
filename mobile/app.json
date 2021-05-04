@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Agnus Survey",
-    "slug": "now-ui-react-native",
+    "slug": "agnus-survey-react-native",
     "privacy": "public",
     "platforms": [
       "ios",
@@ -26,7 +26,14 @@
     },
     "description": "Agnus Survey, based on React Native end Survey.JS . Coded by Mahota Serviços",
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "build": {
+        "babel": {
+          "include": [
+            "galio-framework"
+          ]
+        }
+      }
     }
   }
 }
