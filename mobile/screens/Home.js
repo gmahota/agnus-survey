@@ -13,6 +13,10 @@ class Home extends React.Component {
   renderArticles = (surveys) => {
     const { navigation } = this.props;
 
+    function handlerNavigateToSurvey(id) {
+      navigation.navigate('Survey', { id });
+    }
+
     if (surveys.length === 0) {
       return (
         <Block flex center style={styles.home}>
@@ -41,7 +45,14 @@ class Home extends React.Component {
           </Block>
 
           {surveys.map((item) => {
-            return <Card key={item.id} item={item} horizontal />;
+            return (
+              <Card
+                key={item.id}
+                item={item}
+                horizontal
+                handOnPress={() => handlerNavigateToSurvey(item.id)}
+              />
+            );
           })}
         </Block>
       </ScrollView>

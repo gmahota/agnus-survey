@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-let url = 'https://agnus-survey.herokuapp.com/';
-
+let url = 'http://192.168.43.176:3000/';
 var Items = [];
 let result;
 const getSurveysData = async () => {
@@ -49,11 +48,34 @@ const getSurveysData = async () => {
   // });
 };
 
-const getSurvey = async (id) => {
-  var surveys = await fetch('https://agnus-survey.herokuapp.com/getActive');
+const getSurveyData = async (id) => {
+  await axios
+    .get(url + 'getActive', null, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(
+      (response) => {
+        if (response.data) {
+          result = response.data ? response.data : {};
 
-  console.log(surveys);
+          console.log(result);
 
-  return surveys;
+          if (result) {
+            result = result.map((r) => {
+              r[0];
+            });
+          }
+
+          console.log(result);
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+  return result;
 };
-export { getSurvey, getSurveysData };
+export { getSurveyData, getSurveysData };
