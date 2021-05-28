@@ -14,7 +14,8 @@ class Home extends React.Component {
     const { navigation } = this.props;
 
     function handlerNavigateToSurvey(id) {
-      navigation.navigate('Survey', { id });
+      navigation.navigate('Survey', {id: id},
+      );
     }
 
     if (surveys.length === 0) {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {useRoute} from '@react-navigation/native';
 import {
   TouchableHighlight,
   ImageBackground,
@@ -220,7 +221,8 @@ const surveyDemo = [
   },
 ];
 
-export default class SurveyScreen extends Component {
+export default class SurveyScreen extends Component{
+    
   static navigationOptions = () => {
     return {
       headerStyle: {
@@ -237,23 +239,26 @@ export default class SurveyScreen extends Component {
   };
 
   constructor(props) {
-    super(props);
+    super(props);   
+
     this.state = {
       backgroundColor: PURPLE,
       answersSoFar: '',
       survey: surveyDemo,
+      id:this.props.route.params.id
     };
 
     this.getSurvey = this.getSurvey.bind(this);
   }
 
   async componentDidMount() {
-    this.getSurvey();
+    this.getSurvey().bind(this);
   }
 
   async getSurvey() {
-    let data = await getSurveyData();
-    // this.setState({ survey: data });
+
+    let data = await getSurveyData(this.state.id);
+    this.setState({ survey: data });
 
     console.log(data);
   }

@@ -60,8 +60,10 @@ const getSurveysData = async () => {
 };
 
 const getSurveyData = async (id) => {
+  let item = {};
+
   await axios
-    .get(url + 'getActive', null, {
+    .get(url + `getSurvey/?surveyId:${id}`, null, {
       headers: {
         'Content-Type': 'application/json',
       },
@@ -71,15 +73,23 @@ const getSurveyData = async (id) => {
         if (response.data) {
           result = response.data ? response.data : {};
 
-          console.log(result);
-
           if (result) {
-            result = result.map((r) => {
-              r[0];
-            });
-          }
+            console.log(result);
 
-          console.log(result);
+            key = Object.keys(result)[i];
+
+            if (result[key].json) {
+              let image = require('../assets/imgs/project15.jpg');
+
+              let survey = JSON.parse(result[key].json);
+
+              if (survey.pages[0].elements[0].name.toLowerCase() === 'icon') {
+                image = { uri: survey.pages[0].elements[0].imageLink };
+              }
+
+              item = survey;
+            }
+          }
         }
       },
       (error) => {
@@ -87,6 +97,6 @@ const getSurveyData = async (id) => {
       }
     );
 
-  return result;
+  return item;
 };
 export { getSurveyData, getSurveysData };

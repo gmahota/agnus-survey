@@ -135,18 +135,22 @@ function HomeStack(props) {
 }
 
 function SurveyStack(props) {
+  console.log(props)
   return (
     <Stack.Navigator initialRouteName="Survey" mode="card" headerMode="screen">
       <Stack.Screen
         name="Survey"
         component={SurveyScreen}
         options={{
-          header: ({ navigation, scene }) => (
-            <Header transparent white title="Survey" navigation={navigation} scene={scene} />
+          header: ({route, navigation, scene }) => (
+            <Header transparent white title="Survey"
+              route={route} navigation={navigation} scene={scene} />
           ),
           cardStyle: { backgroundColor: '#FFFFFF' },
           headerTransparent: true,
         }}
+        initialParams={{ id: props.route.params.id }}
+        
       />
       {/* <Stack.Screen
         name="SurveyCompleted"
