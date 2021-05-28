@@ -3,6 +3,8 @@ const Onboarding = require('../assets/imgs/getPro-bg-2.png');
 const Logo = require('../assets/imgs/now-logo2.png');
 const ProfileBackground = require('../assets/imgs/bg5.png');
 const RegisterBackground = require('../assets/imgs/register-bg.png');
+const SurveyFmxBackground = require('../assets/imgs/fmx-bg.png');
+const SurveyMSBackground = require('../assets/imgs/bg5.png');
 const Pro = require('../assets/imgs/bg.png');
 const NowLogo = require('../assets/imgs/now-logo4.png');
 const iOSLogo = require('../assets/imgs/ios.png');
@@ -39,4 +41,6 @@ export default {
   androidLogo,
   CreativeTimLogo,
   InvisionLogo,
+  SurveyFmxBackground,
+  SurveyMSBackground
 };

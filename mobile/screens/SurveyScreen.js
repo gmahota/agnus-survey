@@ -1,7 +1,22 @@
 import React, { Component } from 'react';
-import { StyleSheet, Button, ScrollView, Text, TextInput, View } from 'react-native';
+import {
+  TouchableHighlight,
+  ImageBackground,
+  Image,
+  StyleSheet,
+  StatusBar,
+  Dimensions,
+  Platform,
+  ScrollView,
+  TextInput,
+  View,
+} from 'react-native';
+import { Block, Button, Text, theme } from 'galio-framework';
+
+const { height, width } = Dimensions.get('screen');
+import { Images, nowTheme } from '../constants/';
+import { HeaderHeight } from '../constants/utils';
 import { SimpleSurvey } from 'react-native-simple-survey';
-import { COLORS } from '../res/validColors';
 
 const GREEN = 'rgba(141,196,63,1)';
 const PURPLE = 'rgba(108,48,237,1)';
@@ -238,7 +253,7 @@ export default class SurveyScreen extends Component {
 
   async getSurvey() {
     let data = await getSurveyData();
-    this.setState({ survey: data });
+    // this.setState({ survey: data });
 
     console.log(data);
   }
@@ -288,28 +303,21 @@ export default class SurveyScreen extends Component {
    */
   onAnswerSubmitted(answer) {
     this.setState({ answersSoFar: JSON.stringify(this.surveyRef.getAnswers(), 2) });
-    switch (answer.questionId) {
-      case 'favoriteColor': {
-        if (COLORS.includes(answer.value.toLowerCase())) {
-          this.setState({ backgroundColor: answer.value.toLowerCase() });
-        }
-        break;
-      }
-      default:
-        break;
-    }
   }
 
   renderPreviousButton(onPress, enabled) {
     return (
       <View style={{ flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10 }}>
         <Button
-          color={GREEN}
+          color={nowTheme.COLORS.ERROR}
           onPress={onPress}
           disabled={!enabled}
-          backgroundColor={GREEN}
-          title={'Previous'}
-        />
+          backgroundColor={nowTheme.COLORS.ERROR}
+        >
+          <Text style={{ fontFamily: 'montserrat-bold', fontSize: 14 }} color={theme.COLORS.WHITE}>
+            {'Previous'}
+          </Text>
+        </Button>
       </View>
     );
   }
@@ -318,12 +326,15 @@ export default class SurveyScreen extends Component {
     return (
       <View style={{ flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10 }}>
         <Button
-          color={GREEN}
+          color={nowTheme.COLORS.SUCCESS}
           onPress={onPress}
           disabled={!enabled}
-          backgroundColor={GREEN}
-          title={'Next'}
-        />
+          backgroundColor={nowTheme.COLORS.SUCCESS}
+        >
+          <Text style={{ fontFamily: 'montserrat-bold', fontSize: 14 }} color={theme.COLORS.WHITE}>
+            {'Next'}
+          </Text>
+        </Button>
       </View>
     );
   }
@@ -331,7 +342,11 @@ export default class SurveyScreen extends Component {
   renderFinishedButton(onPress, enabled) {
     return (
       <View style={{ flexGrow: 1, maxWidth: 100, marginTop: 10, marginBottom: 10 }}>
-        <Button title={'Finished'} onPress={onPress} disabled={!enabled} color={GREEN} />
+        <Button onPress={onPress} disabled={!enabled} color={nowTheme.COLORS.SUCCESS}>
+          <Text style={{ fontFamily: 'montserrat-bold', fontSize: 14 }} color={theme.COLORS.WHITE}>
+            {'Finished'}
+          </Text>
+        </Button>
       </View>
     );
   }
@@ -343,12 +358,15 @@ export default class SurveyScreen extends Component {
         style={{ marginTop: 5, marginBottom: 5, justifyContent: 'flex-start' }}
       >
         <Button
-          title={data.optionText}
           onPress={onPress}
-          color={isSelected ? GREEN : PURPLE}
-          style={isSelected ? { fontWeight: 'bold' } : {}}
+          color={isSelected ? nowTheme.COLORS.PRIMARY : nowTheme.COLORS.SECONDARY}
+          style={isSelected ? styles.button_bold : styles.button}
           key={`button_${index}`}
-        />
+        >
+          <Text style={{ fontFamily: 'montserrat-bold', fontSize: 14 }} color={theme.COLORS.WHITE}>
+            {data.optionText}
+          </Text>
+        </Button>
       </View>
     );
   }
@@ -421,48 +439,86 @@ export default class SurveyScreen extends Component {
     }
 
     return (
-      <View style={[styles.background, { backgroundColor: this.state.backgroundColor }]}>
-        <View style={styles.container}>
-          <SimpleSurvey
-            ref={(s) => {
-              this.surveyRef = s;
-            }}
-            survey={survey}
-            renderSelector={this.renderButton.bind(this)}
-            containerStyle={styles.surveyContainer}
-            selectionGroupContainerStyle={styles.selectionGroupContainer}
-            navButtonContainerStyle={{ flexDirection: 'row', justifyContent: 'space-around' }}
-            renderPrevious={this.renderPreviousButton.bind(this)}
-            renderNext={this.renderNextButton.bind(this)}
-            renderFinished={this.renderFinishedButton.bind(this)}
-            renderQuestionText={this.renderQuestionText}
-            onSurveyFinished={(answers) => this.onSurveyFinished(answers)}
-            onAnswerSubmitted={(answer) => this.onAnswerSubmitted(answer)}
-            renderTextInput={this.renderTextBox}
-            renderNumericInput={this.renderNumericInput}
-            renderInfo={this.renderInfoText}
-          />
-        </View>
+      <Block flex center style={styles.home}>
+        <Block flex style={styles.container}>
+          <Block flex>
+            <ImageBackground
+              source={Images.SurveyMSBackground}
+              style={{ flex: 1, height: height, width, zIndex: 1 }}
+            />
 
-        <ScrollView style={styles.answersContainer}>
-          <Text style={{ textAlign: 'center' }}>JSON output</Text>
-          <Text>{this.state.answersSoFar}</Text>
-        </ScrollView>
-      </View>
+            <Block space="between" style={styles.padded}>
+              <Block middle>
+                <SimpleSurvey
+                  ref={(s) => {
+                    this.surveyRef = s;
+                  }}
+                  survey={survey}
+                  renderSelector={this.renderButton.bind(this)}
+                  containerStyle={styles.surveyContainer}
+                  selectionGroupContainerStyle={styles.selectionGroupContainer}
+                  navButtonContainerStyle={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                  }}
+                  renderPrevious={this.renderPreviousButton.bind(this)}
+                  renderNext={this.renderNextButton.bind(this)}
+                  renderFinished={this.renderFinishedButton.bind(this)}
+                  renderQuestionText={this.renderQuestionText}
+                  onSurveyFinished={(answers) => this.onSurveyFinished(answers)}
+                  onAnswerSubmitted={(answer) => this.onAnswerSubmitted(answer)}
+                  renderTextInput={this.renderTextBox}
+                  renderNumericInput={this.renderNumericInput}
+                  renderInfo={this.renderInfoText}
+                />
+              </Block>
+            </Block>
+          </Block>
+        </Block>
+      </Block>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  home: { width: width },
   container: {
-    minWidth: '70%',
-    maxWidth: '90%',
-    alignItems: 'stretch',
-    justifyContent: 'center',
+    backgroundColor: theme.COLORS.BLACK,
+    marginTop: Platform.OS === 'android' ? -HeaderHeight : 0,
+  },
+  surveys: {
+    width: width - theme.SIZES.BASE * 2,
+    paddingVertical: theme.SIZES.BASE,
+    paddingHorizontal: 2,
+    fontFamily: 'montserrat-regular',
+  },
+  padded: {
+    paddingHorizontal: theme.SIZES.BASE * 2,
+    zIndex: 3,
+    position: 'absolute',
+    bottom: Platform.OS === 'android' ? theme.SIZES.BASE * 2 : theme.SIZES.BASE * 3,
+  },
+  button: {
+    width: width - theme.SIZES.BASE * 4,
+    height: theme.SIZES.BASE * 3,
+    shadowRadius: 0,
+    shadowOpacity: 0,
+  },
+  button_bold: {
+    width: width - theme.SIZES.BASE * 4,
+    height: theme.SIZES.BASE * 3,
+    shadowRadius: 0,
+    shadowOpacity: 0,
+    fontWeight: 'bold',
+  },
 
-    elevation: 20,
-    borderRadius: 10,
-    flex: 1,
+  gradient: {
+    zIndex: 1,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 66,
   },
   answersContainer: {
     width: '90%',
