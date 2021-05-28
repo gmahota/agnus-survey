@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-let url = 'http://192.168.43.176:3000/';
+let url = 'https://agnus-survey.herokuapp.com/';
 var Items = [];
 let result;
 const getSurveysData = async () => {
   await axios
     .get(url + 'getActive', null, {
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json;charset=UTF-8',
       },
     })
     .then(
@@ -18,14 +18,25 @@ const getSurveysData = async () => {
           if (result) {
             for (var i = 0; i < Object.keys(result).length; i++) {
               key = Object.keys(result)[i];
-              Items.push({
-                id: key,
-                title: result[key].name || key,
-                survey: result[key].json || result[key],
-                image: require('../assets/imgs/project15.jpg'),
-                cta: 'Run Survey',
-                horizontal: true,
-              });
+
+              if (result[key].json) {
+                let image = require('../assets/imgs/project15.jpg');
+
+                let survey = JSON.parse(result[key].json);
+
+                if (survey.pages[0].elements[0].name.toLowerCase() === 'icon') {
+                  image = { uri: survey.pages[0].elements[0].imageLink };
+                }
+
+                Items.push({
+                  id: key,
+                  title: result[key].name || key,
+                  survey: result[key].json || result[key],
+                  image: image,
+                  cta: 'Run Survey',
+                  horizontal: true,
+                });
+              }
             }
           }
         }

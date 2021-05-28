@@ -127,38 +127,7 @@ class Header extends React.Component {
 
     return (
       <Block row style={styles.options}>
-        <Button
-          shadowless
-          style={[styles.tab, styles.divider]}
-          onPress={() => console.log(navigation.navigate('Pro'))}
-        >
-          <Block row middle>
-            <Icon
-              name="bulb"
-              family="NowExtra"
-              size={18}
-              style={{ paddingRight: 8 }}
-              color={nowTheme.COLORS.HEADER}
-            />
-            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}>
-              {optionLeft || 'Avaliaçõs'}
-            </Text>
-          </Block>
-        </Button>
-        <Button shadowless style={styles.tab} onPress={() => navigation.navigate('Pro')}>
-          <Block row middle>
-            <Icon
-              size={18}
-              name="bag-162x"
-              family="NowExtra"
-              style={{ paddingRight: 8 }}
-              color={nowTheme.COLORS.HEADER}
-            />
-            <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}>
-              {optionRight || 'Consumidor'}
-            </Text>
-          </Block>
-        </Button>
+        
       </Block>
     );
   };
