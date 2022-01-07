@@ -28,7 +28,8 @@ function getDBAdapter(req) {
 
 function sendJsonResult(res, obj) {
   res.setHeader("Content-Type", "application/json");
-  res.send(JSON.stringify(obj));
+  res.send(obj);
+  //res.send(JSON.stringify(obj));
 }
 
 app.get("/getActive", function (req, res) {
